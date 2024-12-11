@@ -7,11 +7,14 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-
 const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
+const container = document.getElementById('three-container');
+
+renderer.setSize(container.offsetWidth, container.offsetHeight);
 renderer.setClearColor(0xd3d3d3);
-document.body.appendChild(renderer.domElement);
+
+// Añadir el canvas al contenedor 'three-container'
+container.appendChild(renderer.domElement);
 
 // Crear la geometría y material para los cubos
 const geometry = new THREE.BoxGeometry(1, 1, 1);
@@ -59,8 +62,8 @@ function onMouseMove(event) {
   cube1.rotation.x += deltaY * 0.01;
 
   // Rotación del cubo 2 con el movimiento del mouse
-  //   cube2.rotation.y += deltaX * 0.01;
-  //   cube2.rotation.x += deltaY * 0.01;
+  cube2.rotation.y += deltaX * 0.01;
+  cube2.rotation.x += deltaY * 0.01;
 
   previousMousePosition = { x: event.clientX, y: event.clientY };
 }
