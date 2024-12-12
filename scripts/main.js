@@ -39,8 +39,16 @@ function createCube(position, color, size) {
 }
 
 // Crear los cubos
-const { cube: cube1, line: line1 } = createCube([-130, 0, 0], 0x8b4513, [50, 30, 30]);
-const { cube: cube2, line: line2 } = createCube([130, 0, 0], 0x8b4513, [100, 100, 100]);
+const { cube: cube1, line: line1 } = createCube(
+  [-130, 0, 0],
+  0x8b4513,
+  [100, 100, 100]
+);
+const { cube: cube2, line: line2 } = createCube(
+  [130, 0, 0],
+  0x8b4513,
+  [100, 100, 100]
+);
 
 // Animación de la escena
 function animate() {
@@ -124,3 +132,56 @@ showTop.addEventListener("click", showTopFace);
 
 const showBotton = document.getElementById("display-bottom");
 showBotton.addEventListener("click", showBottomFace);
+
+/// Formulario
+function updateCubeSize1() {
+  const width = parseFloat(document.getElementById("width-box1").value);
+  const height = parseFloat(document.getElementById("height-box1").value);
+  const depth = parseFloat(document.getElementById("depth-box1").value);
+
+  if (isNaN(width) || isNaN(height) || isNaN(depth)) {
+    console.log("Los valores ingresados no son válidos");
+    return;
+  }
+
+  cube1.geometry.dispose(); // Eliminar la geometría anterior
+  cube1.geometry = new THREE.BoxGeometry(width, height, depth);
+
+  line1.geometry.dispose();
+  line1.geometry = new THREE.EdgesGeometry(
+    new THREE.BoxGeometry(width, height, depth)
+  );
+}
+
+// Controlador del formulario
+const form1 = document.getElementById("box-form1");
+form1.addEventListener("submit", function (event) {
+  event.preventDefault();
+  updateCubeSize1();
+});
+
+function updateCubeSize2() {
+  const width = parseFloat(document.getElementById("width-box2").value);
+  const height = parseFloat(document.getElementById("height-box2").value);
+  const depth = parseFloat(document.getElementById("depth-box2").value);
+
+  if (isNaN(width) || isNaN(height) || isNaN(depth)) {
+    console.log("Los valores ingresados no son válidos");
+    return;
+  }
+
+  cube2.geometry.dispose(); // Eliminar la geometría anterior
+  cube2.geometry = new THREE.BoxGeometry(width, height, depth);
+
+  line2.geometry.dispose();
+  line2.geometry = new THREE.EdgesGeometry(
+    new THREE.BoxGeometry(width, height, depth)
+  );
+}
+
+// Controlador del formulario
+const form2 = document.getElementById("box-form2");
+form2.addEventListener("submit", function (event) {
+  event.preventDefault();
+  updateCubeSize2();
+});
