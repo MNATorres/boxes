@@ -1,88 +1,73 @@
 import * as THREE from "three";
+import { gsap } from "gsap/gsap-core";
 
+// Configuración de la escena y renderizador
 const scene = new THREE.Scene();
 const container = document.getElementById("three-container");
 
-// Configuración de la cámara con perspectiva
+// Configuración de la cámara
 const camera = new THREE.PerspectiveCamera(
   50, // Ángulo de visión
   container.offsetWidth / container.offsetHeight, // Relación de aspecto inicial
   0.1, // Clipping cercano
   1000 // Clipping lejano
 );
+camera.position.set(0, 0, 3);
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(container.offsetWidth, container.offsetHeight);
 renderer.setClearColor(0xd3d3d3);
 container.appendChild(renderer.domElement);
 
-// Crear la geometría y material para los cubos
-const geometry = new THREE.BoxGeometry(1, 1, 1); // 1x1x1 cubo
-const material1 = new THREE.MeshBasicMaterial({ color: 0x8b4513 });
-const material2 = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+// Función para crear un cubo con bordes
+function createCube(position, color) {
+  const geometry = new THREE.BoxGeometry(1, 1, 1);
+  const material = new THREE.MeshBasicMaterial({ color });
+  const cube = new THREE.Mesh(geometry, material);
 
-// Crear los cubos y sus aristas
-const cube1 = new THREE.Mesh(geometry, material1);
-const edges1 = new THREE.EdgesGeometry(geometry);
-const lineMaterial1 = new THREE.LineBasicMaterial({ color: 0x000000 });
-const line1 = new THREE.LineSegments(edges1, lineMaterial1);
+  const edges = new THREE.EdgesGeometry(geometry);
+  const lineMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
+  const line = new THREE.LineSegments(edges, lineMaterial);
 
-const cube2 = new THREE.Mesh(geometry, material2);
-const edges2 = new THREE.EdgesGeometry(geometry);
-const lineMaterial2 = new THREE.LineBasicMaterial({ color: 0x000000 });
-const line2 = new THREE.LineSegments(edges2, lineMaterial2);
+  cube.position.set(...position);
+  line.position.copy(cube.position);
 
-// Agregar los cubos y sus aristas a la escena
-scene.add(cube1);
-scene.add(line1);
-scene.add(cube2);
-scene.add(line2);
+  scene.add(cube);
+  scene.add(line);
 
-// Colocar los cubos en diferentes posiciones
-cube1.position.set(-0.8, 0, 0);
-cube2.position.set(0.8, 0, 0);
-line1.position.copy(cube1.position);
-line2.position.copy(cube2.position);
+  return { cube, line };
+}
 
-// Configurar la posición de la cámara
-camera.position.set(0, 0, 5);
+// Crear los cubos
+const { cube: cube1, line: line1 } = createCube([-1, 0, 0], 0x8b4513);
+const { cube: cube2, line: line2 } = createCube([1, 0, 0], 0x0000ff);
 
-// Función de animación
+// Animación de la escena
 function animate() {
-  // Sincronizar las aristas con la rotación de los cubos
   line1.rotation.copy(cube1.rotation);
   line2.rotation.copy(cube2.rotation);
-
-  // Renderizar la escena
   renderer.render(scene, camera);
 }
 
-// Llamada a la función de animación
 function animateScene() {
   animate();
   requestAnimationFrame(animateScene);
 }
-
 animateScene();
 
+// Actualización del tamaño del renderizador y cámara al cambiar el tamaño de la ventana
 function updateSize() {
   const width = container.offsetWidth;
   const height = container.offsetHeight;
 
   renderer.setSize(width, height);
-
-  // Ajustar la cámara para que tenga el aspect ratio correcto
   camera.aspect = width / height;
-  camera.updateProjectionMatrix(); // Actualizamos la cámara
+  camera.updateProjectionMatrix();
 }
-
-// Llamamos a updateSize cuando se redimensione la ventana
 window.addEventListener("resize", updateSize);
-
-// Llamar a updateSize inicialmente para ajustar el tamaño correcto
 updateSize();
 
-// Funciones para controlar el movimiento del mouse
+// Control de interacción con el mouse
 let isDragging = false;
 let previousMousePosition = { x: 0, y: 0 };
 
@@ -92,7 +77,6 @@ function onMouseMove(event) {
   const deltaX = event.clientX - previousMousePosition.x;
   const deltaY = event.clientY - previousMousePosition.y;
 
-  // Rotación del cubo 1 y 2 con el movimiento del mouse
   cube1.rotation.y += deltaX * 0.01;
   cube1.rotation.x += deltaY * 0.01;
 
@@ -109,8 +93,37 @@ function onMouseDown(event) {
 
 function onMouseUp() {
   isDragging = false;
+  console.log("x", cube1.rotation.x);
+  console.log("y", cube1.rotation.y);
+  console.log("Rotación en grados:");
+  console.log("grados x:", THREE.MathUtils.radToDeg(cube1.rotation.x));
+  console.log("grados y:", THREE.MathUtils.radToDeg(cube1.rotation.y));
 }
 
-window.addEventListener("mousedown", onMouseDown);
-window.addEventListener("mousemove", onMouseMove);
-window.addEventListener("mouseup", onMouseUp);
+container.addEventListener("mousedown", onMouseDown);
+container.addEventListener("mousemove", onMouseMove);
+container.addEventListener("mouseup", onMouseUp);
+
+function resetRotation() {
+  gsap.to(cube1.rotation, { x: 0, y: 0, z: 0, duration: 1 });
+  gsap.to(cube2.rotation, { x: 0, y: 0, z: 0, duration: 1 });
+}
+
+function showTopFace() {
+  gsap.to(cube1.rotation, { x: 0.8, y: -3.16, z: 0, duration: 1 });
+  gsap.to(cube2.rotation, { x: 0.8, y: -3.16, z: 0, duration: 1 });
+}
+
+function showBottomFace() {
+  gsap.to(cube1.rotation, { x: -1.04, y: 0.01, z: 0, duration: 1 });
+  gsap.to(cube2.rotation, { x: -1.04, y: 0.01, z: 0, duration: 1 });
+}
+
+const resetButton = document.getElementById("reset-button");
+resetButton.addEventListener("click", resetRotation);
+
+const showTop = document.getElementById("display-top");
+showTop.addEventListener("click", showTopFace);
+
+const showBotton = document.getElementById("display-bottom");
+showBotton.addEventListener("click", showBottomFace);
