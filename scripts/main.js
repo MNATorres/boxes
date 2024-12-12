@@ -79,6 +79,11 @@ updateSize();
 let isDragging = false;
 let previousMousePosition = { x: 0, y: 0 };
 
+function onMouseDown(event) {
+  isDragging = true;
+  previousMousePosition = { x: event.clientX, y: event.clientY };
+}
+
 function onMouseMove(event) {
   if (!isDragging) return;
 
@@ -91,11 +96,6 @@ function onMouseMove(event) {
   cube2.rotation.y += deltaX * 0.01;
   cube2.rotation.x += deltaY * 0.01;
 
-  previousMousePosition = { x: event.clientX, y: event.clientY };
-}
-
-function onMouseDown(event) {
-  isDragging = true;
   previousMousePosition = { x: event.clientX, y: event.clientY };
 }
 
@@ -199,7 +199,7 @@ cajasMock.forEach((caja) => {
 });
 
 selectCaja1.addEventListener("change", (event) => {
-  const selectedIndex = event.target.value; // Índice de la opción seleccionada
+  const selectedIndex = event.target.value; 
 
   const findBoxByName = cajasMock.find((name) => name.nombre === selectedIndex);
 
@@ -215,7 +215,7 @@ selectCaja1.addEventListener("change", (event) => {
       return;
     }
 
-    cube1.geometry.dispose(); // Eliminar la geometría anterior
+    cube1.geometry.dispose();
     cube1.geometry = new THREE.BoxGeometry(width, height, depth);
 
     line1.geometry.dispose();
@@ -236,7 +236,7 @@ cajasMock.forEach((caja) => {
 });
 
 selectCaja2.addEventListener("change", (event) => {
-  const selectedIndex = event.target.value; // Índice de la opción seleccionada
+  const selectedIndex = event.target.value; 
 
   const findBoxByName = cajasMock.find((name) => name.nombre === selectedIndex);
 
@@ -252,7 +252,7 @@ selectCaja2.addEventListener("change", (event) => {
       return;
     }
 
-    cube2.geometry.dispose(); // Eliminar la geometría anterior
+    cube2.geometry.dispose();
     cube2.geometry = new THREE.BoxGeometry(width, height, depth);
 
     line2.geometry.dispose();

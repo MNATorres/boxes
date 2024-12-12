@@ -4,17 +4,43 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script type="module" crossorigin src="/assets/index-knEa-Si-.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-Cjes1HjI.css">
+    <script type="module" crossorigin src="/assets/index-BszpXBD5.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DoNWx8Xz.css">
   </head>
   <body>
-    <div class="container-boxs">
+    <section>
+      <div class="container-boxs">
+        <div class="container-select">
+          <div class="select-box">
+            <div class="caja-select">
+              <label for="caja1">Caja 1:</label>
+              <select id="caja1"></select>
+            </div>
+          </div>
+          <div class="select-box">
+            <div class="caja-select">
+              <label for="caja2">Caja 2:</label>
+              <select id="caja2"></select>
+            </div>
+          </div>
+        </div>
+        <div id="three-container" class="three-container-class">
+          <div class="container-buttons">
+            <button id="reset-button">Reset</button>
+            <button id="display-top">Top</button>
+            <button id="display-bottom">Bottom</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
       <div class="type-caja">
         <div class="box-title">
           <h3>Caja 1</h3>
           <form id="box-form1">
             <div class="form-group">
-              <label for="width">Ancho (cm):</label>
+              <label for="width-box1">Ancho (cm):</label>
               <input
                 type="number"
                 id="width-box1"
@@ -26,7 +52,7 @@
             </div>
 
             <div class="form-group">
-              <label for="height">Alto (cm):</label>
+              <label for="height-box1">Alto (cm):</label>
               <input
                 type="number"
                 id="height-box1"
@@ -38,7 +64,7 @@
             </div>
 
             <div class="form-group">
-              <label for="depth">Profundidad (cm):</label>
+              <label for="depth-box1">Profundidad (cm):</label>
               <input
                 type="number"
                 id="depth-box1"
@@ -55,7 +81,7 @@
           <h3>Caja 2</h3>
           <form id="box-form2">
             <div class="form-group">
-              <label for="width">Ancho (cm):</label>
+              <label for="width-box2">Ancho (cm):</label>
               <input
                 type="number"
                 id="width-box2"
@@ -67,7 +93,7 @@
             </div>
 
             <div class="form-group">
-              <label for="height">Alto (cm):</label>
+              <label for="height-box2">Alto (cm):</label>
               <input
                 type="number"
                 id="height-box2"
@@ -79,7 +105,7 @@
             </div>
 
             <div class="form-group">
-              <label for="depth">Profundidad (cm):</label>
+              <label for="depth-box2">Profundidad (cm):</label>
               <input
                 type="number"
                 id="depth-box2"
@@ -93,13 +119,7 @@
           </form>
         </div>
       </div>
-      <div id="three-container" class="three-container-class">
-        <div class="container-buttons">
-          <button id="reset-button">Reset</button>
-          <button id="display-top">Top</button>
-          <button id="display-bottom">Bottom</button>
-        </div>
-      </div>
-    </div>
+    </section>
+
   </body>
 </html>

@@ -2,7 +2,7 @@ export const cajasMock = [
     {
       nombre: "Caja A",
       alto: 30,
-      ancho: 20,
+      ancho: 40,
       profundidad: 15,
     },
     {
@@ -19,14 +19,14 @@ export const cajasMock = [
     },
     {
       nombre: "Caja D",
-      alto: 10,
-      ancho: 10,
-      profundidad: 10,
+      alto: 35,
+      ancho: 55,
+      profundidad: 30,
     },
     {
       nombre: "Caja E",
       alto: 75,
-      ancho: 50,
-      profundidad: 30,
+      ancho: 75,
+      profundidad: 100,
     },
   ];
