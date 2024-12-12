@@ -12,7 +12,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1, // Clipping cercano
   1000 // Clipping lejano
 );
-camera.position.set(0, 0, 3);
+camera.position.set(0, 0, 350);
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(container.offsetWidth, container.offsetHeight);
@@ -20,8 +20,8 @@ renderer.setClearColor(0xd3d3d3);
 container.appendChild(renderer.domElement);
 
 // Función para crear un cubo con bordes
-function createCube(position, color) {
-  const geometry = new THREE.BoxGeometry(1, 1, 1);
+function createCube(position, color, size) {
+  const geometry = new THREE.BoxGeometry(...size);
   const material = new THREE.MeshBasicMaterial({ color });
   const cube = new THREE.Mesh(geometry, material);
 
@@ -39,8 +39,8 @@ function createCube(position, color) {
 }
 
 // Crear los cubos
-const { cube: cube1, line: line1 } = createCube([-1, 0, 0], 0x8b4513);
-const { cube: cube2, line: line2 } = createCube([1, 0, 0], 0x0000ff);
+const { cube: cube1, line: line1 } = createCube([-130, 0, 0], 0x8b4513, [50, 30, 30]);
+const { cube: cube2, line: line2 } = createCube([130, 0, 0], 0x8b4513, [100, 100, 100]);
 
 // Animación de la escena
 function animate() {
@@ -95,9 +95,6 @@ function onMouseUp() {
   isDragging = false;
   console.log("x", cube1.rotation.x);
   console.log("y", cube1.rotation.y);
-  console.log("Rotación en grados:");
-  console.log("grados x:", THREE.MathUtils.radToDeg(cube1.rotation.x));
-  console.log("grados y:", THREE.MathUtils.radToDeg(cube1.rotation.y));
 }
 
 container.addEventListener("mousedown", onMouseDown);
