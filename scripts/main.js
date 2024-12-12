@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { gsap } from "gsap/gsap-core";
 import { cajasMock } from "../mock/cajas-mock";
+import { OrbitControls } from "three/examples/jsm/Addons.js";
 
 const scene = new THREE.Scene();
 const container = document.getElementById("three-container");
@@ -64,7 +65,7 @@ function animateScene() {
 animateScene();
 
 // Actualización del tamaño del renderizador y cámara al cambiar el tamaño de la ventana
-function updateSize() {
+function adjustRenderSize() {
   const width = container.offsetWidth;
   const height = container.offsetHeight;
 
@@ -72,8 +73,8 @@ function updateSize() {
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
 }
-window.addEventListener("resize", updateSize);
-updateSize();
+window.addEventListener("resize", adjustRenderSize);
+adjustRenderSize();
 
 // Control de interacción con el mouse
 let isDragging = false;
@@ -134,130 +135,78 @@ const showBotton = document.getElementById("display-bottom");
 showBotton.addEventListener("click", showBottomFace);
 
 /// Formulario
-function updateCubeSize1() {
-  const width = parseFloat(document.getElementById("width-box1").value);
-  const height = parseFloat(document.getElementById("height-box1").value);
-  const depth = parseFloat(document.getElementById("depth-box1").value);
 
-  if (isNaN(width) || isNaN(height) || isNaN(depth)) {
-    console.log("Los valores ingresados no son válidos");
-    return;
-  }
+function getCustomCubeSize(cubeId) {
+  const width = parseFloat(document.getElementById(`width-${cubeId}`).value);
+  const height = parseFloat(document.getElementById(`height-${cubeId}`).value);
+  const depth = parseFloat(document.getElementById(`depth-${cubeId}`).value);
 
-  cube1.geometry.dispose(); // Eliminar la geometría anterior
-  cube1.geometry = new THREE.BoxGeometry(width, height, depth);
-
-  line1.geometry.dispose();
-  line1.geometry = new THREE.EdgesGeometry(
-    new THREE.BoxGeometry(width, height, depth)
-  );
+  return { width, height, depth };
 }
 
 // Controlador del formulario
 const form1 = document.getElementById("box-form1");
 form1.addEventListener("submit", function (event) {
   event.preventDefault();
-  updateCubeSize1();
+  updateBoxSize(getCustomCubeSize("box1"), cube1, line1);
 });
 
-function updateCubeSize2() {
-  const width = parseFloat(document.getElementById("width-box2").value);
-  const height = parseFloat(document.getElementById("height-box2").value);
-  const depth = parseFloat(document.getElementById("depth-box2").value);
+// Controlador del formulario
+const form2 = document.getElementById("box-form2");
+form2.addEventListener("submit", function (event) {
+  event.preventDefault();
+  updateBoxSize(getCustomCubeSize("box2"), cube2, line2);
+});
+
+function updateBoxSize(box, cube, line) {
+  const width = box.width;
+  const height = box.height;
+  const depth = box.depth;
 
   if (isNaN(width) || isNaN(height) || isNaN(depth)) {
     console.log("Los valores ingresados no son válidos");
     return;
   }
 
-  cube2.geometry.dispose(); // Eliminar la geometría anterior
-  cube2.geometry = new THREE.BoxGeometry(width, height, depth);
+  cube.geometry.dispose();
+  cube.geometry = new THREE.BoxGeometry(width, height, depth);
 
-  line2.geometry.dispose();
-  line2.geometry = new THREE.EdgesGeometry(
+  line.geometry.dispose();
+  line.geometry = new THREE.EdgesGeometry(
     new THREE.BoxGeometry(width, height, depth)
   );
 }
 
-// Controlador del formulario
-const form2 = document.getElementById("box-form2");
-form2.addEventListener("submit", function (event) {
-  event.preventDefault();
-  updateCubeSize2();
-});
+///////////////////// select /////////////////////////
 
-///////////////////// select
-
-// Referencia al elemento select
 const selectCaja1 = document.getElementById("caja1");
-
-cajasMock.forEach((caja) => {
-  const option = document.createElement("option");
-  option.value = caja.nombre;
-  option.textContent = caja.nombre;
-  selectCaja1.appendChild(option);
-});
-
-selectCaja1.addEventListener("change", (event) => {
-  const selectedIndex = event.target.value; 
-
-  const findBoxByName = cajasMock.find((name) => name.nombre === selectedIndex);
-
-  console.log("findBoxByName", findBoxByName);
-
-  if (findBoxByName) {
-    const width = findBoxByName.ancho;
-    const height = findBoxByName.alto;
-    const depth = findBoxByName.profundidad;
-
-    if (isNaN(width) || isNaN(height) || isNaN(depth)) {
-      console.log("Los valores ingresados no son válidos");
-      return;
-    }
-
-    cube1.geometry.dispose();
-    cube1.geometry = new THREE.BoxGeometry(width, height, depth);
-
-    line1.geometry.dispose();
-    line1.geometry = new THREE.EdgesGeometry(
-      new THREE.BoxGeometry(width, height, depth)
-    );
-  }
-});
-
-// Referencia al elemento select
 const selectCaja2 = document.getElementById("caja2");
 
-cajasMock.forEach((caja) => {
-  const option = document.createElement("option");
-  option.value = caja.nombre;
-  option.textContent = caja.nombre;
-  selectCaja2.appendChild(option);
-});
+function populateSelect(selectCaja) {
+  cajasMock.forEach((caja) => {
+    const option = document.createElement("option");
+    option.value = caja.name;
+    option.textContent = caja.name;
+    selectCaja.appendChild(option);
+  });
+}
 
-selectCaja2.addEventListener("change", (event) => {
-  const selectedIndex = event.target.value; 
+populateSelect(selectCaja1);
+populateSelect(selectCaja2);
 
-  const findBoxByName = cajasMock.find((name) => name.nombre === selectedIndex);
+function handleSelectChange(event, cube, line) {
+  const selectedName = event.target.value;
+  const selectedBox = cajasMock.find((box) => box.name === selectedName);
+  console.log("selectedBox", selectedBox);
 
-  console.log("findBoxByName", findBoxByName);
-
-  if (findBoxByName) {
-    const width = findBoxByName.ancho;
-    const height = findBoxByName.alto;
-    const depth = findBoxByName.profundidad;
-
-    if (isNaN(width) || isNaN(height) || isNaN(depth)) {
-      console.log("Los valores ingresados no son válidos");
-      return;
-    }
-
-    cube2.geometry.dispose();
-    cube2.geometry = new THREE.BoxGeometry(width, height, depth);
-
-    line2.geometry.dispose();
-    line2.geometry = new THREE.EdgesGeometry(
-      new THREE.BoxGeometry(width, height, depth)
-    );
+  if (selectedBox) {
+    updateBoxSize(selectedBox, cube, line);
   }
-});
+}
+
+selectCaja1.addEventListener("change", (event) =>
+  handleSelectChange(event, cube1, line1)
+);
+selectCaja2.addEventListener("change", (event) =>
+  handleSelectChange(event, cube2, line2)
+);
