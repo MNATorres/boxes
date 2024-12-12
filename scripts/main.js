@@ -1,11 +1,10 @@
 import * as THREE from "three";
 import { gsap } from "gsap/gsap-core";
+import { cajasMock } from "../mock/cajas-mock";
 
-// Configuración de la escena y renderizador
 const scene = new THREE.Scene();
 const container = document.getElementById("three-container");
 
-// Configuración de la cámara
 const camera = new THREE.PerspectiveCamera(
   50, // Ángulo de visión
   container.offsetWidth / container.offsetHeight, // Relación de aspecto inicial
@@ -61,6 +60,7 @@ function animateScene() {
   animate();
   requestAnimationFrame(animateScene);
 }
+
 animateScene();
 
 // Actualización del tamaño del renderizador y cámara al cambiar el tamaño de la ventana
@@ -184,4 +184,80 @@ const form2 = document.getElementById("box-form2");
 form2.addEventListener("submit", function (event) {
   event.preventDefault();
   updateCubeSize2();
+});
+
+///////////////////// select
+
+// Referencia al elemento select
+const selectCaja1 = document.getElementById("caja1");
+
+cajasMock.forEach((caja) => {
+  const option = document.createElement("option");
+  option.value = caja.nombre;
+  option.textContent = caja.nombre;
+  selectCaja1.appendChild(option);
+});
+
+selectCaja1.addEventListener("change", (event) => {
+  const selectedIndex = event.target.value; // Índice de la opción seleccionada
+
+  const findBoxByName = cajasMock.find((name) => name.nombre === selectedIndex);
+
+  console.log("findBoxByName", findBoxByName);
+
+  if (findBoxByName) {
+    const width = findBoxByName.ancho;
+    const height = findBoxByName.alto;
+    const depth = findBoxByName.profundidad;
+
+    if (isNaN(width) || isNaN(height) || isNaN(depth)) {
+      console.log("Los valores ingresados no son válidos");
+      return;
+    }
+
+    cube1.geometry.dispose(); // Eliminar la geometría anterior
+    cube1.geometry = new THREE.BoxGeometry(width, height, depth);
+
+    line1.geometry.dispose();
+    line1.geometry = new THREE.EdgesGeometry(
+      new THREE.BoxGeometry(width, height, depth)
+    );
+  }
+});
+
+// Referencia al elemento select
+const selectCaja2 = document.getElementById("caja2");
+
+cajasMock.forEach((caja) => {
+  const option = document.createElement("option");
+  option.value = caja.nombre;
+  option.textContent = caja.nombre;
+  selectCaja2.appendChild(option);
+});
+
+selectCaja2.addEventListener("change", (event) => {
+  const selectedIndex = event.target.value; // Índice de la opción seleccionada
+
+  const findBoxByName = cajasMock.find((name) => name.nombre === selectedIndex);
+
+  console.log("findBoxByName", findBoxByName);
+
+  if (findBoxByName) {
+    const width = findBoxByName.ancho;
+    const height = findBoxByName.alto;
+    const depth = findBoxByName.profundidad;
+
+    if (isNaN(width) || isNaN(height) || isNaN(depth)) {
+      console.log("Los valores ingresados no son válidos");
+      return;
+    }
+
+    cube2.geometry.dispose(); // Eliminar la geometría anterior
+    cube2.geometry = new THREE.BoxGeometry(width, height, depth);
+
+    line2.geometry.dispose();
+    line2.geometry = new THREE.EdgesGeometry(
+      new THREE.BoxGeometry(width, height, depth)
+    );
+  }
 });
