@@ -23,6 +23,7 @@ function createCube(position, size) {
   const geometry = new THREE.BoxGeometry(...size);
 
   const textureLoader = new THREE.TextureLoader();
+
   const boxTexture = textureLoader.load("./../assets/carton.jpg");
   const material = new THREE.MeshBasicMaterial({ map: boxTexture });
 
