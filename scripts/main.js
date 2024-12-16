@@ -18,32 +18,70 @@ renderer.setSize(container.offsetWidth, container.offsetHeight);
 renderer.setClearColor(0xf4f4f4);
 container.appendChild(renderer.domElement);
 
-// Función para crear un cubo con bordes
 function createCube(position, size) {
   const geometry = new THREE.BoxGeometry(...size);
-
   const textureLoader = new THREE.TextureLoader();
-
   const boxTexture = textureLoader.load("./../assets/carton.jpg");
   const material = new THREE.MeshBasicMaterial({ map: boxTexture });
 
-  const cube = new THREE.Mesh(geometry, material);
+  // Material para la parte superior de la caja
+  const topBottomTexture = textureLoader.load("./../assets/arriba-caja.jpg");
+  const topBottomMaterial = new THREE.MeshBasicMaterial({
+    map: topBottomTexture,
+  });
+
+  const materials = [
+    material,
+    material,
+    topBottomMaterial, // parte superio
+    topBottomMaterial, // parte inferior
+    material,
+    material,
+  ];
+
+  const cube = new THREE.Mesh(geometry, materials);
+
+  // Crear líneas de aristas
+  const edges = new THREE.EdgesGeometry(geometry);
+  const lineMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
+  const line = new THREE.LineSegments(edges, lineMaterial);
+
+  // Añadir líneas al cubo
+  line.position.copy(cube.position); // Sincronizar posición
+  scene.add(line);
 
   cube.position.set(...position);
-
+  line.position.set(...position);
   scene.add(cube);
 
-  return { cube };
+  return { cube, line };
 }
 
 // Crear los cubos
 const { cube: cube1, line: line1 } = createCube([-110, 0, 0], [100, 100, 100]);
-
 const { cube: cube2, line: line2 } = createCube([110, 0, 0], [100, 100, 100]);
 
+// Inicializar visibilidad de las líneas (ocultas por defecto)
+line1.visible = false;
+line2.visible = false;
+
+// Función para controlar la visibilidad de las líneas
+function toggleLines() {
+  const dimensionsEnabled =
+    document.getElementById("active-dimensions").checked;
+
+  line1.visible = dimensionsEnabled;
+  line2.visible = dimensionsEnabled;
+}
+
+// Detectar cambios en el checkbox de dimensiones
+document
+  .getElementById("active-dimensions")
+  .addEventListener("change", toggleLines);
+
 function rotationInit() {
-  cube1.rotation.set(0.2, 0, 0);
-  cube2.rotation.set(0.2, 0, 0);
+  cube1.rotation.set(0.3, 0, 0);
+  cube2.rotation.set(0.3, 0, 0);
 }
 
 rotationInit();
@@ -56,15 +94,15 @@ function resetCameraPosition() {
     x: 0,
     y: 0,
     z: 310,
-    duration: 1, 
-    ease: "power2.out", 
+    duration: 1,
+    ease: "power2.out",
   });
 
   gsap.to(camera.rotation, {
     x: 0,
     y: 0,
     z: 0,
-    duration: 1, 
+    duration: 1,
     ease: "power2.out",
   });
 }

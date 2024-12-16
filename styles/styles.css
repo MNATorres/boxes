@@ -49,7 +49,7 @@ body {
 .container-buttons {
   position: absolute;
   padding: 5px;
-  width: 98%;
+  width: 96%;
   display: flex;
   justify-content: space-between;
 }
