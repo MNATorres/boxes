@@ -58,8 +58,14 @@ function createCube(position, size) {
 }
 
 // Crear los cubos
-const { cube: cube1, line: line1 } = createCube([-110, 0, 0], [100, 100, 100]);
-const { cube: cube2, line: line2 } = createCube([110, 0, 0], [100, 100, 100]);
+const { cube: cube1, line: line1 } = createCube(
+  [-110, 0, 0],
+  [cajasMock[0].width, cajasMock[0].height, cajasMock[0].depth]
+);
+const { cube: cube2, line: line2 } = createCube(
+  [110, 0, 0],
+  [cajasMock[0].width, cajasMock[0].height, cajasMock[0].depth]
+);
 
 // Inicializar visibilidad de las líneas (ocultas por defecto)
 line1.visible = false;
