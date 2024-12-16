@@ -1,59 +1,98 @@
 import * as THREE from "three";
 import { gsap } from "gsap/gsap-core";
-import { cajasMock } from "../mock/cajas-mock";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
+
+import { cajasMock } from "../mock/cajas-mock";
 
 const scene = new THREE.Scene();
 const container = document.getElementById("three-container");
 
 const camera = new THREE.PerspectiveCamera(
   50, // Ángulo de visión
-  container.offsetWidth / container.offsetHeight, // Relación de aspecto inicial
-  0.1, // Clipping cercano
-  1000 // Clipping lejano
+  container.offsetWidth / container.offsetHeight // Relación de aspecto inicial
 );
-camera.position.set(0, 0, 350);
+camera.position.set(0, 0, 310);
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(container.offsetWidth, container.offsetHeight);
-renderer.setClearColor(0xd3d3d3);
+renderer.setClearColor(0xf4f4f4);
 container.appendChild(renderer.domElement);
 
 // Función para crear un cubo con bordes
-function createCube(position, color, size) {
+function createCube(position, size) {
   const geometry = new THREE.BoxGeometry(...size);
-  const material = new THREE.MeshBasicMaterial({ color });
+
+  const textureLoader = new THREE.TextureLoader();
+  const boxTexture = textureLoader.load("./../assets/carton.jpg");
+  const material = new THREE.MeshBasicMaterial({ map: boxTexture });
+
   const cube = new THREE.Mesh(geometry, material);
 
-  const edges = new THREE.EdgesGeometry(geometry);
-  const lineMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
-  const line = new THREE.LineSegments(edges, lineMaterial);
-
   cube.position.set(...position);
-  line.position.copy(cube.position);
 
   scene.add(cube);
-  scene.add(line);
 
-  return { cube, line };
+  return { cube };
 }
 
 // Crear los cubos
-const { cube: cube1, line: line1 } = createCube(
-  [-130, 0, 0],
-  0x8b4513,
-  [100, 100, 100]
-);
-const { cube: cube2, line: line2 } = createCube(
-  [130, 0, 0],
-  0x8b4513,
-  [100, 100, 100]
-);
+const { cube: cube1, line: line1 } = createCube([-110, 0, 0], [100, 100, 100]);
 
-// Animación de la escena
+const { cube: cube2, line: line2 } = createCube([110, 0, 0], [100, 100, 100]);
+
+function rotationInit() {
+  cube1.rotation.set(0.2, 0, 0);
+  cube2.rotation.set(0.2, 0, 0);
+}
+
+rotationInit();
+
+// Inicializar OrbitControls fuera de la función de zoom
+let controls = null;
+
+function resetCameraPosition() {
+  gsap.to(camera.position, {
+    x: 0,
+    y: 0,
+    z: 310,
+    duration: 1, 
+    ease: "power2.out", 
+  });
+
+  gsap.to(camera.rotation, {
+    x: 0,
+    y: 0,
+    z: 0,
+    duration: 1, 
+    ease: "power2.out",
+  });
+}
+
+function toggleZoom() {
+  const zoomEnabled = document.getElementById("active-zoom").checked;
+
+  if (zoomEnabled && !controls) {
+    // Activar OrbitControls si no está ya activado
+    controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.25;
+    controls.screenSpacePanning = false;
+    controls.maxPolarAngle = Math.PI / 2;
+  } else if (!zoomEnabled && controls) {
+    resetCameraPosition();
+    controls.dispose();
+    controls = null;
+    rotationInit();
+  }
+}
+
+// Detectar cambios en el checkbox para activar o desactivar el zoom
+document.getElementById("active-zoom").addEventListener("change", toggleZoom);
+
 function animate() {
-  line1.rotation.copy(cube1.rotation);
-  line2.rotation.copy(cube2.rotation);
+  if (controls) {
+    controls.update();
+  }
   renderer.render(scene, camera);
 }
 
@@ -107,12 +146,13 @@ function onMouseUp() {
 }
 
 container.addEventListener("mousedown", onMouseDown);
-container.addEventListener("mousemove", onMouseMove);
-container.addEventListener("mouseup", onMouseUp);
+window.addEventListener("mousemove", onMouseMove);
+window.addEventListener("mouseup", onMouseUp);
 
-function resetRotation() {
-  gsap.to(cube1.rotation, { x: 0, y: 0, z: 0, duration: 1 });
-  gsap.to(cube2.rotation, { x: 0, y: 0, z: 0, duration: 1 });
+function resetPosition() {
+  resetCameraPosition();
+  gsap.to(cube1.rotation, { x: 0.3, y: 0, z: 0, duration: 1 });
+  gsap.to(cube2.rotation, { x: 0.3, y: 0, z: 0, duration: 1 });
 }
 
 function showTopFace() {
@@ -126,7 +166,7 @@ function showBottomFace() {
 }
 
 const resetButton = document.getElementById("reset-button");
-resetButton.addEventListener("click", resetRotation);
+resetButton.addEventListener("click", resetPosition);
 
 const showTop = document.getElementById("display-top");
 showTop.addEventListener("click", showTopFace);

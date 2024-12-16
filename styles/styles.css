@@ -44,12 +44,23 @@ body {
   position: relative;
   width: 700px;
   height: 400px;
-}
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;}
 
 .container-buttons {
   position: absolute;
-  top: 5px;
-  left: 5px;
+  padding: 5px;
+  width: 98%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons-rigth {
+  display: flex;
+  align-items: center;
+}
+
+.buttons-rigth label {
+  margin-top: 5px;
 }
 
 /* styles form */
