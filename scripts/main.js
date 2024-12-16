@@ -132,6 +132,8 @@ function animate() {
   if (controls) {
     controls.update();
   }
+  line1.rotation.copy(cube1.rotation);
+  line2.rotation.copy(cube2.rotation);
   renderer.render(scene, camera);
 }
 
