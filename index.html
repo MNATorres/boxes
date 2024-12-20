@@ -1,133 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./styles/styles.css" />
-  </head>
-  <body>
-    <section>
-      <div class="container-boxs">
-        <div class="container-select">
-          <div class="select-box">
-            <div class="caja-select">
-              <label for="caja1">Caja 1:</label>
-              <select id="caja1"></select>
-            </div>
-          </div>
-          <div class="select-box">
-            <div class="caja-select">
-              <label for="caja2">Caja 2:</label>
-              <select id="caja2"></select>
-            </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./styles/styles.css" />
+  <link rel="stylesheet" href="./styles/table.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <h1>Cajas 3D</h1>
+  </header>
+
+  <section>
+    <div class="container-boxs">
+      <div class="container-select">
+        <div class="select-box">
+          <div class="caja-select">
+            <label for="caja1">Caja 1:</label>
+            <select id="caja1"></select>
           </div>
         </div>
-        <div id="three-container" class="three-container-class">
-          <div class="container-buttons">
-            <div class="buttons-left">
-              <button id="reset-button">Reset</button>
-              <button id="display-top">Top</button>
-              <button id="display-bottom">Bottom</button>
-            </div>
-            <div class="buttons-rigth">
-              <input type="checkbox" id="active-zoom" />
-              <label for="active-zoom">Zoom</label>
-              <input type="checkbox" id="active-dimensions" />
-              <label for="active-dimensions">Dimensiones</label>
-            </div>
+        <div class="select-box">
+          <div class="caja-select">
+            <label for="caja2">Caja 2:</label>
+            <select id="caja2"></select>
           </div>
         </div>
       </div>
-    </section>
-
-    <section>
-      <div class="type-caja">
-        <div class="box-title">
-          <h3>Caja 1</h3>
-          <form id="box-form1">
-            <div class="form-group">
-              <label for="width-box1">Ancho (cm):</label>
-              <input
-                type="number"
-                id="width-box1"
-                name="width"
-                placeholder="Ingrese Ancho"
-                required
-                min="0"
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="height-box1">Alto (cm):</label>
-              <input
-                type="number"
-                id="height-box1"
-                name="height"
-                placeholder="Ingrese Alto"
-                required
-                min="0"
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="depth-box1">Profundidad (cm):</label>
-              <input
-                type="number"
-                id="depth-box1"
-                name="depth"
-                placeholder="Ingrese Profundidad"
-                required
-                min="0"
-              />
-            </div>
-            <button type="submit" class="submit-btn">Submit</button>
-          </form>
+      <div id="three-container" class="three-container-class">
+        <div class="container-buttons">
+          <div class="buttons-left">
+            <button id="reset-button">Reset</button>
+            <button id="display-top">Top</button>
+            <button id="display-bottom">Bottom</button>
+          </div>
+          <div class="buttons-rigth">
+            <input type="checkbox" id="active-zoom" />
+            <label for="active-zoom">Zoom</label>
+            <input type="checkbox" id="active-dimensions" />
+            <label for="active-dimensions">Dimensiones</label>
+          </div>
         </div>
-        <div class="box-title">
-          <h3>Caja 2</h3>
-          <form id="box-form2">
-            <div class="form-group">
-              <label for="width-box2">Ancho (cm):</label>
-              <input
-                type="number"
-                id="width-box2"
-                name="width"
-                placeholder="Ingrese Ancho"
-                required
-                min="0"
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="height-box2">Alto (cm):</label>
-              <input
-                type="number"
-                id="height-box2"
-                name="height"
-                placeholder="Ingrese Alto"
-                required
-                min="0"
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="depth-box2">Profundidad (cm):</label>
-              <input
-                type="number"
-                id="depth-box2"
-                name="depth"
-                placeholder="Ingrese Profundidad"
-                required
-                min="0"
-              />
-            </div>
-            <button type="submit" class="submit-btn">Submit</button>
-          </form>
+        <div class="icon-360">
+          <img src="./assets/360.png" alt="gira360">
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <script type="module" src="./scripts/main.js"></script>
-  </body>
+  <section>
+    <div class="container-info-resume">
+      <!-- Card for Box 1 -->
+      <div class="resume" id="box1-card">
+        <h2 class="product-title" id="box1-title"></h2>
+        <div class="product-content">
+          <img class="image-resume" src="" alt="Imagen de Caja 1" id="box1-image">
+          <div class="detalles">
+            <ul class="ul-resume" id="box1-details">
+              <!-- Detalles dinámicos -->
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card for Box 2 -->
+      <div class="resume" id="box2-card">
+        <h2 class="product-title" id="box2-title"></h2>
+        <div class="product-content">
+          <img class="image-resume" src="" alt="Imagen de Caja 2" id="box2-image">
+          <div class="detalles">
+            <ul class="ul-resume" id="box2-details">
+              <!-- Detalles dinámicos -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="type-caja">
+      <div class="box-title">
+        <h3>Caja 1</h3>
+        <form id="box-form1">
+          <div class="form-group">
+            <label for="width-box1">Ancho (cm):</label>
+            <input type="number" id="width-box1" name="width" placeholder="Ingrese Ancho" required min="0" />
+          </div>
+
+          <div class="form-group">
+            <label for="height-box1">Alto (cm):</label>
+            <input type="number" id="height-box1" name="height" placeholder="Ingrese Alto" required min="0" />
+          </div>
+
+          <div class="form-group">
+            <label for="depth-box1">Profundidad (cm):</label>
+            <input type="number" id="depth-box1" name="depth" placeholder="Ingrese Profundidad" required min="0" />
+          </div>
+          <button type="submit" class="submit-btn">Submit</button>
+        </form>
+      </div>
+      <div class="box-title">
+        <h3>Caja 2</h3>
+        <form id="box-form2">
+          <div class="form-group">
+            <label for="width-box2">Ancho (cm):</label>
+            <input type="number" id="width-box2" name="width" placeholder="Ingrese Ancho" required min="0" />
+          </div>
+
+          <div class="form-group">
+            <label for="height-box2">Alto (cm):</label>
+            <input type="number" id="height-box2" name="height" placeholder="Ingrese Alto" required min="0" />
+          </div>
+
+          <div class="form-group">
+            <label for="depth-box2">Profundidad (cm):</label>
+            <input type="number" id="depth-box2" name="depth" placeholder="Ingrese Profundidad" required min="0" />
+          </div>
+          <button type="submit" class="submit-btn">Submit</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <table id="cajasTable" border="1">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Alto (cm)</th>
+          <th>Ancho (cm)</th>
+          <th>Profundidad (cm)</th>
+          <th>Color</th>
+          <th>Material</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <p>Cajas 3D</p>
+    </div>
+  </footer>
+
+  <script type="module" src="./scripts/main.js"></script>
+  <script type="module" src="./scripts/table.js"></script>
+</body>
+
 </html>

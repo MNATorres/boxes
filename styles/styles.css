@@ -5,8 +5,24 @@ body {
   background-color: #c7c7c7;
 }
 
+header {
+  background-color: #6d6d6d;
+  color: white;
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: Arial, sans-serif;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 .type-caja {
-  width: 700px;
+  width: 1000px;
   display: flex;
   margin: 5px auto;
   justify-content: space-between;
@@ -24,7 +40,7 @@ body {
 
 .container-select {
   display: flex;
-  width: 700px;
+  width: 1000px;
   justify-content: space-between;
   margin: 10px 0 5px;
 }
@@ -35,16 +51,12 @@ body {
   justify-content: center;
 }
 
-.box-title {
-  width: 100%;
-  text-align: center;
-}
-
 .three-container-class {
   position: relative;
-  width: 700px;
+  width: 1000px;
   height: 400px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;}
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
 
 .container-buttons {
   position: absolute;
@@ -52,6 +64,19 @@ body {
   width: 96%;
   display: flex;
   justify-content: space-between;
+}
+
+.buttons-left button{
+  background-color: #185291;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 2px;
+}
+
+.buttons-left button:hover {
+  background-color: #0056b3;
+  cursor: pointer;
 }
 
 .buttons-rigth {
@@ -63,15 +88,26 @@ body {
   margin-top: 5px;
 }
 
+.icon-360 {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.icon-360 img {
+  width: 50px;
+  object-fit: cover;
+}
+
 /* styles form */
 
 .box-title {
-  padding: 5px;
   background-color: #d9d5d5;
   border-radius: 1px;
-  width: 90%;
-  margin: 2px auto;
+  width: 49.8%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding-bottom: 5px;
 }
 
 .box-title h3 {
@@ -114,7 +150,7 @@ input[type="number"]:focus {
 .submit-btn {
   width: 30%;
   padding: 3px;
-  background-color: #007bff;
+  background-color: #185291;
   color: white;
   border: none;
   border-radius: 4px;
@@ -124,4 +160,98 @@ input[type="number"]:focus {
 
 .submit-btn:hover {
   background-color: #0056b3;
+}
+
+/* fin styles form */
+
+/*styles resume */
+
+.container-info-resume {
+  width: 1000px;
+  margin: 5px auto;
+  height: 250px;
+  background-color: #d1d1d1;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+
+.resume {
+  max-width: 800px;
+  width: 45%;
+  margin: 3px;
+  padding: 3px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  font-family: "Arial", sans-serif;
+}
+
+.product-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+  text-align: center;
+  color: #333;
+}
+
+.product-content {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.image-resume {
+  border-radius: 8px;
+  object-fit: contain;
+  flex: 1;
+  width: 50%;
+  height: 200px;
+}
+
+.detalles {
+  flex: 1;
+}
+
+.ul-resume {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ul-resume li {
+  font-size: 16px;
+  margin: 10px 0;
+  color: #555;
+}
+
+ /* Estilos para el footer */
+ footer {
+  background-color: #333; 
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+footer p {
+  margin: 0;
+  font-size: 14px;
+}
+
+footer a {
+  color: #007bff; 
+  text-decoration: none;
+  margin-top: 5px; 
+}
+
+footer a:hover {
+  text-decoration: underline; 
 }

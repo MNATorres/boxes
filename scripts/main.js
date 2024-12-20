@@ -11,7 +11,7 @@ const camera = new THREE.PerspectiveCamera(
   50, // Ángulo de visión
   container.offsetWidth / container.offsetHeight // Relación de aspecto inicial
 );
-camera.position.set(0, 0, 310);
+camera.position.set(0, 0, 130);
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(container.offsetWidth, container.offsetHeight);
@@ -59,11 +59,11 @@ function createCube(position, size) {
 
 // Crear los cubos
 const { cube: cube1, line: line1 } = createCube(
-  [-110, 0, 0],
+  [-70, 0, 0],
   [cajasMock[0].width, cajasMock[0].height, cajasMock[0].depth]
 );
 const { cube: cube2, line: line2 } = createCube(
-  [110, 0, 0],
+  [70, 0, 0],
   [cajasMock[0].width, cajasMock[0].height, cajasMock[0].depth]
 );
 
@@ -99,7 +99,7 @@ function resetCameraPosition() {
   gsap.to(camera.position, {
     x: 0,
     y: 0,
-    z: 310,
+    z: 130,
     duration: 1,
     ease: "power2.out",
   });
@@ -281,6 +281,47 @@ function populateSelect(selectCaja) {
 populateSelect(selectCaja1);
 populateSelect(selectCaja2);
 
+// Actualizar las tarjetas con el primer elemento del mock al cargar la página
+const defaultBox = cajasMock[0];
+
+updateCard(defaultBox, "box1-image", "box1-details", "box1-title");
+updateCard(defaultBox, "box2-image", "box2-details", "box2-title");
+
+// Opcional: establecer el valor inicial del select
+selectCaja1.value = defaultBox.name;
+selectCaja2.value = defaultBox.name;
+
+function updateCard(selectedBox, imageId, detailsId, titleId) {
+  const cardImage = document.getElementById(imageId);
+  const cardDetails = document.getElementById(detailsId);
+  const cardTitle = document.getElementById(titleId);
+
+  if (selectedBox) {
+    // Actualizar imagen
+    cardImage.src = selectedBox.url || "https://via.placeholder.com/150";
+    cardImage.alt = `Imagen de ${selectedBox.name}`;
+  
+
+    // Actualizar detalles
+    cardDetails.innerHTML = `
+      <li>Alto: ${selectedBox.height} cm</li>
+      <li>Ancho: ${selectedBox.width} cm</li>
+      <li>Profundidad: ${selectedBox.depth} cm</li>
+    `;
+
+    cardTitle.textContent = selectedBox.name;
+  }
+}
+
+function handleInfoCard(event, imageId, detailsId, titleId) {
+  const selectedName = event.target.value;
+  const selectedBox = cajasMock.find((box) => box.name === selectedName);
+
+  if (selectedBox) {
+    updateCard(selectedBox, imageId, detailsId, titleId);
+  }
+}
+
 function handleSelectChange(event, cube, line) {
   const selectedName = event.target.value;
   const selectedBox = cajasMock.find((box) => box.name === selectedName);
@@ -291,9 +332,12 @@ function handleSelectChange(event, cube, line) {
   }
 }
 
-selectCaja1.addEventListener("change", (event) =>
-  handleSelectChange(event, cube1, line1)
-);
-selectCaja2.addEventListener("change", (event) =>
-  handleSelectChange(event, cube2, line2)
-);
+selectCaja1.addEventListener("change", (event) => {
+  handleSelectChange(event, cube1, line1);
+  handleInfoCard(event, "box1-image", "box1-details", "box1-title");
+});
+
+selectCaja2.addEventListener("change", (event) => {
+  handleSelectChange(event, cube2, line2);
+  handleInfoCard(event, "box2-image", "box2-details", "box2-title");
+});
