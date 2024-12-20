@@ -210,9 +210,61 @@ input[type="number"]:focus {
   height: 200px;
 }
 
+/* Estilos detalles breves */
+
 .detalles {
   flex: 1;
 }
+
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 15px;
+  text-align: left;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.details-table th {
+  background-color: #898989;
+  color: white;
+  text-align: center;
+  font-size: 15px;
+  padding: 12px;
+}
+
+.details-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.details-table tr:last-child td {
+  border-bottom: none;
+}
+
+.details-table td:first-child {
+  font-weight: bold;
+  color: #333;
+}
+
+.details-table td:last-child {
+  text-align: right;
+  color: #555;
+}
+
+.details-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.details-table tbody tr:hover {
+  background-color: #e8f4ff;
+}
+
+/* Termina estilo detalles breves*/
+
 
 .ul-resume {
   list-style: none;

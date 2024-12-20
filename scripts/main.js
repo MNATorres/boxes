@@ -304,10 +304,28 @@ function updateCard(selectedBox, imageId, detailsId, titleId) {
 
     // Actualizar detalles
     cardDetails.innerHTML = `
-      <li>Alto: ${selectedBox.height} cm</li>
-      <li>Ancho: ${selectedBox.width} cm</li>
-      <li>Profundidad: ${selectedBox.depth} cm</li>
-    `;
+  <table class="details-table">
+    <thead>
+      <tr>
+        <th colspan="2">Detalles</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Alto:</td>
+        <td>${selectedBox.height} cm</td>
+      </tr>
+      <tr>
+        <td>Ancho:</td>
+        <td>${selectedBox.width} cm</td>
+      </tr>
+      <tr>
+        <td>Profundidad:</td>
+        <td>${selectedBox.depth} cm</td>
+      </tr>
+    </tbody>
+  </table>
+`;
 
     cardTitle.textContent = selectedBox.name;
   }
