@@ -300,7 +300,6 @@ function updateCard(selectedBox, imageId, detailsId, titleId) {
     // Actualizar imagen
     cardImage.src = selectedBox.url || "https://via.placeholder.com/150";
     cardImage.alt = `Imagen de ${selectedBox.name}`;
-  
 
     // Actualizar detalles
     cardDetails.innerHTML = `
@@ -340,6 +339,29 @@ function handleInfoCard(event, imageId, detailsId, titleId) {
   }
 }
 
+function updateDetailTable(selectedBox, boxPrefix) {
+  if (!selectedBox) return;
+
+  // Actualizar los títulos de las cajas
+  document.getElementById(`${boxPrefix}-title-table`).textContent = selectedBox.name;
+
+  // Actualizar las características de la caja
+  document.getElementById(
+    `${boxPrefix}-height`
+  ).textContent = `${selectedBox.height} cm`;
+  document.getElementById(
+    `${boxPrefix}-width`
+  ).textContent = `${selectedBox.width} cm`;
+  document.getElementById(
+    `${boxPrefix}-depth`
+  ).textContent = `${selectedBox.depth} cm`;
+  document.getElementById(`${boxPrefix}-color`).textContent = selectedBox.color;
+  document.getElementById(`${boxPrefix}-material`).textContent =
+    selectedBox.material;
+  document.getElementById(`${boxPrefix}-description`).textContent =
+    selectedBox.description;
+}
+
 function handleSelectChange(event, cube, line) {
   const selectedName = event.target.value;
   const selectedBox = cajasMock.find((box) => box.name === selectedName);
@@ -351,13 +373,23 @@ function handleSelectChange(event, cube, line) {
 }
 
 selectCaja1.addEventListener("change", (event) => {
+  const selectedBox1 = cajasMock.find((box) => box.name === event.target.value);
+
   handleSelectChange(event, cube1, line1);
   handleInfoCard(event, "box1-image", "box1-details", "box1-title");
+  updateDetailTable(selectedBox1, "box1");
 });
 
 selectCaja2.addEventListener("change", (event) => {
+  const selectedBox2 = cajasMock.find((box) => box.name === event.target.value);
+
   handleSelectChange(event, cube2, line2);
   handleInfoCard(event, "box2-image", "box2-details", "box2-title");
+  updateDetailTable(selectedBox2, "box2");
 });
 
-
+// Inicializar la tabla con las cajas seleccionadas por defecto
+const initialBox1 = cajasMock.find((box) => box.name === selectCaja1.value);
+const initialBox2 = cajasMock.find((box) => box.name === selectCaja2.value);
+updateDetailTable(initialBox1, "box1");
+updateDetailTable(initialBox2, "box2");
