@@ -36,7 +36,6 @@
   /* Estilo para las filas cuando se pasa el ratón por encima */
   .comparison-table tr:hover {
     background-color: #e1f5e1;
-    cursor: pointer;
   }
   
   /* Estilo para las celdas de los títulos de las cajas */

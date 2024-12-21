@@ -1,6 +1,6 @@
 export const cajasMock = [
   {
-    name: "Default",
+    name: "Caja Default",
     height: 50,
     width: 50,
     depth: 50,
