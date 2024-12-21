@@ -359,3 +359,5 @@ selectCaja2.addEventListener("change", (event) => {
   handleSelectChange(event, cube2, line2);
   handleInfoCard(event, "box2-image", "box2-details", "box2-title");
 });
+
+

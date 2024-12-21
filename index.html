@@ -128,19 +128,30 @@
   </section>
 
   <section>
-    <table id="cajasTable" border="1">
+    <table class="comparison-table">
       <thead>
         <tr>
-          <th>Título</th>
-          <th>Alto (cm)</th>
-          <th>Ancho (cm)</th>
-          <th>Profundidad (cm)</th>
-          <th>Color</th>
-          <th>Material</th>
-          <th>Descripción</th>
+          <th id="box1-title">Caja 1</th>
+          <th id="box2-title">Caja 2</th>
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td>Alto: <span id="box1-height">-</span> cm</td>
+          <td>Alto: <span id="box2-height">-</span> cm</td>
+        </tr>
+        <tr>
+          <td>Ancho: <span id="box1-width">-</span> cm</td>
+          <td>Ancho: <span id="box2-width">-</span> cm</td>
+        </tr>
+        <tr>
+          <td>Profundidad: <span id="box1-depth">-</span> cm</td>
+          <td>Profundidad: <span id="box2-depth">-</span> cm</td>
+        </tr>
+        <tr>
+          <td>Imagen: <img id="box1-image" src="https://via.placeholder.com/150" alt="Caja 1"></td>
+          <td>Imagen: <img id="box2-image" src="https://via.placeholder.com/150" alt="Caja 2"></td>
+        </tr>
       </tbody>
     </table>
   </section>
@@ -152,7 +163,7 @@
   </footer>
 
   <script type="module" src="./scripts/main.js"></script>
-  <script type="module" src="./scripts/table.js"></script>
+  <!-- <script type="module" src="./scripts/table.js"></script> -->
 </body>
 
 </html>

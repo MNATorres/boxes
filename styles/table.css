@@ -1,45 +1,21 @@
-/* Estilo para la tabla */
-#cajasTable {
+.comparison-table {
   width: 100%;
-  max-width: 1000px;
-  min-width: 800px;
-  margin: 20px auto 50px;
   border-collapse: collapse;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
 }
 
-/* Estilo para las celdas */
-#cajasTable th,
-#cajasTable td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-/* Fondo de los encabezados */
-#cajasTable th {
-  background-color: #6d6d6d;
-  color: #fff;
-  font-weight: bold;
-}
-
-/* Estilo para las filas de la tabla */
-#cajasTable tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-#cajasTable tbody tr:hover {
-  background-color: #d8d8d8;
-}
-
-/* Estilo para el contorno de la tabla */
-#cajasTable {
+.comparison-table th,
+.comparison-table td {
+  padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 2px;
-  overflow: hidden;
+  text-align: center;
 }
 
-/* Estilo para las celdas */
-#cajasTable td {
-  font-size: 14px;
+.comparison-table th {
+  background-color: #f4f4f4;
+}
+
+.comparison-table img {
+  width: 100px;
+  height: 100px;
 }

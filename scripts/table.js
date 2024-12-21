@@ -1,25 +1,37 @@
-import { cajasMock } from "../mock/cajas-mock";
+function populateComparisonTable(selectedBox) {
+  // Obtener filas de la tabla
+  const titlesRow = document.querySelector("#cajasTitlesRow");
+  const detailsRow = document.querySelector("#cajasDetailsRow");
 
-function populateTable() {
-  const tableBody = document.querySelector("#cajasTable tbody");
+  // Limpiar filas existentes
+  titlesRow.innerHTML = `<th>Características</th>`;
+  detailsRow.innerHTML = "";
 
-  cajasMock.forEach((caja) => {
-    const row = document.createElement("tr");
+  if (selectedBox) {
+    // Agregar el título de la caja seleccionada
+    const titleCell = document.createElement("th");
+    titleCell.textContent = selectedBox.name;
+    titlesRow.appendChild(titleCell);
 
-    // Creando las celdas por cada propiedad de cada caja
-    row.innerHTML = `
-        <td>${caja.name}</td>
-        <td>${caja.height}</td>
-        <td>${caja.width}</td>
-        <td>${caja.depth}</td>
-        <td>${caja.color}</td>
-        <td>${caja.material}</td>
-        <td>${caja.description}</td>
+    // Agregar las características de la caja seleccionada
+    const characteristics = ["height", "width", "depth", "color", "material", "description"];
+    characteristics.forEach((key) => {
+      const detailRow = document.createElement("tr");
+      detailRow.innerHTML = `
+        <th>${key.charAt(0).toUpperCase() + key.slice(1)}:</th>
+        <td>${selectedBox[key]}</td>
       `;
-
-    // Agregamos la fila al cuerpo de la tabla
-    tableBody.appendChild(row);
-  });
+      detailsRow.appendChild(detailRow);
+    });
+  }
 }
 
-document.addEventListener("DOMContentLoaded", populateTable);
+// Inicializar la tabla con la primera caja por defecto
+populateComparisonTable(cajasMock[0]);
+
+// Ejemplo: Cambiar la tabla al seleccionar otra caja
+document.querySelector("#selectBox").addEventListener("change", (event) => {
+  const selectedName = event.target.value;
+  const selectedBox = cajasMock.find((box) => box.name === selectedName);
+  populateComparisonTable(selectedBox);
+});
